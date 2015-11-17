@@ -62,7 +62,7 @@ class QueryResult:
 		self.queryResult = queryResult
 		self.index = 0
 		self.numResults = 0
-		if querySuccess() is True
+		if querySuccess() is True:
 			self.numResults = int(queryResult['totalRows'])
 		self.numRows = len(queryResult['rows'])
 
@@ -84,9 +84,9 @@ class QueryResult:
 		Return False for unsuccessful query.
 		Return None for no results.
 		"""
-		if querySuccess() is True
+		if querySuccess() is True:
 			return False
-		if numRows == 0
+		if numRows == 0:
 			return None
 		return queryResult['rows']
 
@@ -94,6 +94,6 @@ class QueryResult:
 		""" Get query result schema.
 		Returns an array of dicts.
 		"""
-		if querySuccess() is False
+		if querySuccess() is False:
 			return False
 		return queryResult['schema']['fields']
