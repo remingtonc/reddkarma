@@ -62,7 +62,7 @@ class QueryResult:
 		self.queryResult = queryResult
 		self.index = 0
 		self.numResults = 0
-		if (querySuccess())
+		if querySuccess() is True
 			self.numResults = int(queryResult['totalRows'])
 		self.numRows = len(queryResult['rows'])
 
@@ -78,19 +78,22 @@ class QueryResult:
 		""" Reset index of result feeder. """
 		index = 0
 
-	def getResult():
-		""" Get next result from query results.
+	def getResults():
+		""" Get query result set.
+		Returns a dict of results.
 		Return False for unsuccessful query.
-		Return None for no more results.
+		Return None for no results.
 		"""
-		if (querySuccess())
+		if querySuccess() is True
 			return False
-		if (index == numRows - 1)
+		if numRows == 0
 			return None
-		index++
-		return queryResult['rows'].next()
+		return queryResult['rows']
 
 	def getSchema():
-		if (!querySuccess())
+		""" Get query result schema.
+		Returns an array of dicts.
+		"""
+		if querySuccess() is False
 			return False
 		return queryResult['schema']['fields']
