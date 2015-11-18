@@ -12,10 +12,10 @@ class BigQuery:
 
 	# Basic structure of a request to the BigQuery API.
 	requestStructure = {
-		'timeoutMs': 10000,
-		'kind': 'bigquery#queryrequest',
+		'timeoutMs': 10 * 1000,
+		'kind': 'bigquery#queryRequest',
 		'dryRun': False,
-		'useQueryCahce': True,
+		'useQueryCache': True,
 		'defaultDataset': {
 			'projectId': project_id,
 			'datasetId': 'reddit_posts'
@@ -45,12 +45,8 @@ class BigQuery:
 		# Copy requestStructure so we don't run the risk of the structure changing
 		request = self.requestStructure.copy()
 		request['query'] = queryString
-		# Convert request dict into JSON
-		# request = json.dumps(request)
 		# Make request, takes up to request.timeoutMs
-		response = self.service.jobs().query(projectId=self.project_id, body=request)
-		response = response.execute()
-		# Convert returned JSON into dict for return
+		response = self.service.jobs().query(projectId=self.project_id, body=request).execute()
 		return response
 
 	def __init__(self):
@@ -63,11 +59,11 @@ class QueryResult:
 
 	def querySuccess(self):
 		""" Check if query was successful. """
-		return self.queryResult['jobComplete']
+		return self.queryResult.get('jobComplete', False)
 
 	def hasErrors(self):
 		""" Check if query returned errors or warnings. """
-		return (len(self.queryResult['errors']) > 0)
+		return (len(self.queryResult.get('errors', []) > 0)
 
 	def getResults(self):
 		""" Get query result set.
@@ -79,7 +75,7 @@ class QueryResult:
 			return False
 		if self.numRows == 0:
 			return None
-		return self.queryResult['rows']
+		return self.queryResult.get('rows', {})
 
 	def getSchema(self):
 		""" Get query result schema.
@@ -87,12 +83,12 @@ class QueryResult:
 		"""
 		if self.querySuccess() is False:
 			return False
-		return self.queryResult['schema']['fields']
+		return self.queryResult.get('schema', {'fields': None})['fields']
 
 	def __init__(self, queryResult):
 		""" Initialize new QueryResult using supplied results. """
 		self.queryResult = queryResult
 		self.numResults = 0
 		if self.querySuccess() is True:
-			self.numResults = int(queryResult['totalRows'])
-		self.numRows = len(queryResult['rows'])
+			self.numResults = int(queryResult.get('totalRows', 0))
+		self.numRows = len(queryResult.get('rows', []))
