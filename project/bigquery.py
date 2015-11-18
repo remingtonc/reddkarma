@@ -49,6 +49,7 @@ class BigQuery:
 		# request = json.dumps(request)
 		# Make request, takes up to request.timeoutMs
 		response = self.service.jobs().query(projectId=self.project_id, body=request)
+		response = response.execute()
 		# Convert returned JSON into dict for return
 		return response
 
