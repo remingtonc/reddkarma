@@ -46,7 +46,10 @@ class BigQuery:
 		request = self.requestStructure.copy()
 		request['query'] = queryString
 		# Make request, takes up to request.timeoutMs
-		response = self.service.jobs().query(projectId=self.project_id, body=request).execute()
+		try:
+			response = self.service.jobs().query(projectId=self.project_id, body=request).execute()
+		except HttpError as e:
+			logging.error('HTTP error encountered!')
 		return response
 
 	def __init__(self):
@@ -63,7 +66,7 @@ class QueryResult:
 
 	def hasErrors(self):
 		""" Check if query returned errors or warnings. """
-		return (len(self.queryResult.get('errors', []) > 0)
+		return (len(self.queryResult.get('errors', []) > 0))
 
 	def getResults(self):
 		""" Get query result set.
