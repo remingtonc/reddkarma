@@ -1,5 +1,9 @@
 from flask import Flask
 from bigquery import BigQuery, QueryResult
+import logging
+
+logging.basicConfig(filename='reddkarma.log', level=logging.DEBUG, format='%(asctime)s %(message)s')
+logging.debug('Debug message check.')
 
 app = Flask(__name__)
 bq = BigQuery()
