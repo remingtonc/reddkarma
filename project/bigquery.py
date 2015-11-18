@@ -44,13 +44,13 @@ class BigQuery:
 		"""
 		# Copy requestStructure so we don't run the risk of the structure changing
 		request = self.requestStructure.copy()
-		request['query'] = self.queryString
+		request['query'] = queryString
 		# Convert request dict into JSON
-		request = json.dumps(request)
+		# request = json.dumps(request)
 		# Make request, takes up to request.timeoutMs
-		response = self.service.jobs.query(self.project_id, request)
+		response = self.service.jobs().query(projectId=self.project_id, body=request)
 		# Convert returned JSON into dict for return
-		return json.loads(response)
+		return response
 
 	def __init__(self):
 		pass
