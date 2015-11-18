@@ -1,5 +1,6 @@
 from apiclient.discovery import build
-import json
+from apiclient.errors import HttpError
+from oauth2client.client import GoogleCredentials
 
 class BigQuery:
 	""" Container for common methods related to BigQuery functionality.
@@ -24,8 +25,10 @@ class BigQuery:
 		'query': ''
 	}
 
+	# Grab the application's default credentials from the environment.
+	credentials = GoogleCredentials.get_application_default()
 	# Build service for common usage.
-	service = build('bigquery', 'v2', api_key)
+	service = build('bigquery', 'v2', credentials=credentials)
 
 	def getTableId(self):
 		""" Get the table ID to be used for querying. """
