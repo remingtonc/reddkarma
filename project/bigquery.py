@@ -1,6 +1,7 @@
 from apiclient.discovery import build
 from apiclient.errors import HttpError
 from oauth2client.client import GoogleCredentials
+import logging
 
 class BigQuery:
 	""" Container for common methods related to BigQuery functionality.
@@ -52,7 +53,8 @@ class BigQuery:
 		try:
 			response = self.service.jobs().query(projectId=self.project_id, body=request).execute()
 		except HttpError as e:
-			logging.error('HTTP error encountered!')
+			logging.error('Error: {}'.format(e.content))
+			raise e
 		return response
 
 	def __init__(self):
