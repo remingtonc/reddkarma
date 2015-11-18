@@ -2,12 +2,20 @@
 <html>
 <head>
 	<title>{% block title %}ReddKarma{% endblock %}</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
 
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+
+	<!-- ReddKarma CSS -->
+	<link rel="stylesheet" href="/static/css/reddkarma.css">
+
+	<!-- Minified jQuery 2.x -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+	<!-- Minified AngularJS 1.x -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
 
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
@@ -18,9 +26,9 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-4">
-					<div class="logo"></div>
+					<div class="logo"><h1>ReddKarma</h1></div>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-8">
 					<div class="search">
 						<div class="form-group">
 							<label for="search" class="col-sm-2 control-label">Subreddit</label>
@@ -28,7 +36,7 @@
 								<input type="text" class="form-control" id="search" placeholder="/r/givemekarma">
 							</div>
 							<div class="col-sm-2">
-								<button class="btn btn-primary" type="button" value="Search!"></button>
+								<button class="btn btn-primary" type="button" value="Search!">Search!</button>
 							</div>
 						</div>
 					</div>
