@@ -79,7 +79,7 @@ class QueryResult:
 		Return False for unsuccessful query.
 		Return None for no results.
 		"""
-		if self.querySuccess() is True:
+		if self.querySuccess() is False:
 			return False
 		if self.numRows == 0:
 			return None

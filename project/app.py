@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template, url_for
 from bigquery import BigQuery, QueryResult
 import logging
 
@@ -10,6 +10,10 @@ bq = BigQuery()
 
 @app.route('/')
 def home():
+	return render_template('home.html', name='home')
+
+@app.route('/queryTest')
+def queryTest():
 	preQuery = 'SELECT domain, COUNT(*) count, ROUND(AVG(score), 1) avg_score FROM'
 	postQuery = 'WHERE YEAR(SEC_TO_TIMESTAMP(created))=2015 AND NOT domain CONTAINS "self." GROUP BY 1 HAVING count > 700 ORDER BY 3 DESC LIMIT 10'
 	queryString = bq.buildQuery(preQuery, postQuery)
@@ -22,10 +26,10 @@ def home():
 	for header in headers:
 		output += '<th>' + header['name'] + '</th>'
 	output += '</tr>'
-	for row,rowvalue in result.getResults():
+	for row in result.getResults():
 		output += '<tr>'
-		for column,columnvalue in rowvalue:
-			output += '<td>' + columnvalue + '</td>'
+		for column in row.get('f', {}):
+			output += '<td>' + column.get('v', 'Null') + '</td>'
 		output += '</tr>'
 	output += '</table>'
 	return output
