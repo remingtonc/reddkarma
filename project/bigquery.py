@@ -1,17 +1,24 @@
 from apiclient.discovery import build
 from apiclient.errors import HttpError
 from oauth2client.client import GoogleCredentials
+from oauth2client.client import SignedJwtAssertionCredentials
+from httplib2 import Http
 import logging
 
 class BigQuery:
 	""" Container for common methods related to BigQuery functionality.
 	Handles BigQuery access and retrieval.
 	"""
-
-	api_key = 'AIzaSyAJn5yLJlQUx7kB2N3xEXIK_D7yEq05JJw'
 	project_id = 'loyal-landing-110819'
 	table_id = '[loyal-landing-110819:reddit_posts.full_corpus_201509]'
+	api_key = 'AIzaSyAJn5yLJlQUx7kB2N3xEXIK_D7yEq05JJw'
 
+	client_email = 'account-1@loyal-landing-110819.iam.gserviceaccount.com'
+	with open('ReddKarma-12e9c71700ae.p12') as f:
+		private_key = f.read()
+	credentials = SignedJwtAssertionCredentials(client_email, private_key, 'https://www.googleapis.com/auth/sqlservice.admin')
+	http_auth = credentials.authorize(Http())
+	
 	# Basic structure of a request to the BigQuery API.
 	requestStructure = {
 		'timeoutMs': 10 * 1000,
@@ -29,7 +36,7 @@ class BigQuery:
 	# Grab the application's default credentials from the environment.
 	credentials = GoogleCredentials.get_application_default()
 	# Build service for common usage.
-	service = build('bigquery', 'v2', credentials=credentials)
+	service = build('bigquery', 'v2', http=http_auth)
 
 	def getTableId(self):
 		""" Get the table ID to be used for querying. """
