@@ -27,18 +27,21 @@ class BigQuery:
 	# Build service for common usage.
 	service = build('bigquery', 'v2', api_key)
 
-	def getTableId():
+	def __init__(self):
+		pass
+
+	def getTableId(self):
 		""" Get the table ID to be used for querying. """
 		return table_id
 
-	def buildQuery(prefix, suffix):
+	def buildQuery(self, prefix, suffix):
 		""" Build a query with the table ID.
 		:param prefix: Query fragment to append before table identification.  Trailing spaces not required.
 		"param suffix: Query fragment to append after table identification.  Padding spaces not required.
 		"""
 		return prefix + " " + table_id + " " + suffix;
 
-	def query(queryString):
+	def query(self, queryString):
 		""" Query the BigQuery database and return results synchronously
 		:param queryString: String to query BigQuery with.
 		"""
@@ -60,40 +63,35 @@ class QueryResult:
 	def __init__(self, queryResult):
 		""" Initialize new QueryResult using supplied results. """
 		self.queryResult = queryResult
-		self.index = 0
 		self.numResults = 0
 		if querySuccess() is True:
 			self.numResults = int(queryResult['totalRows'])
 		self.numRows = len(queryResult['rows'])
 
-	def querySuccess():
+	def querySuccess(self):
 		""" Check if query was successful. """
-		return queryResult['jobComplete']
+		return self.queryResult['jobComplete']
 
-	def hasErrors():
+	def hasErrors(self):
 		""" Check if query returned errors or warnings. """
-		return (len(queryResult['errors']) > 0)
+		return (len(self.queryResult['errors']) > 0)
 
-	def resetIndex():
-		""" Reset index of result feeder. """
-		index = 0
-
-	def getResults():
+	def getResults(self):
 		""" Get query result set.
 		Returns a dict of results.
 		Return False for unsuccessful query.
 		Return None for no results.
 		"""
-		if querySuccess() is True:
+		if self.querySuccess() is True:
 			return False
-		if numRows == 0:
+		if self.numRows == 0:
 			return None
-		return queryResult['rows']
+		return self.queryResult['rows']
 
-	def getSchema():
+	def getSchema(self):
 		""" Get query result schema.
 		Returns an array of dicts.
 		"""
-		if querySuccess() is False:
+		if self.querySuccess() is False:
 			return False
-		return queryResult['schema']['fields']
+		return self.queryResult['schema']['fields']
