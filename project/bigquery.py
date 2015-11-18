@@ -27,9 +27,6 @@ class BigQuery:
 	# Build service for common usage.
 	service = build('bigquery', 'v2', api_key)
 
-	def __init__(self):
-		pass
-
 	def getTableId(self):
 		""" Get the table ID to be used for querying. """
 		return table_id
@@ -55,18 +52,13 @@ class BigQuery:
 		# Convert returned JSON into dict for return
 		return json.loads(response)
 
+	def __init__(self):
+		pass
+
 class QueryResult:
 	""" Container for common methods related to BigQuery results.
 	Handles determining query successes, getting the schema, and getting results from returned set."
 	"""
-
-	def __init__(self, queryResult):
-		""" Initialize new QueryResult using supplied results. """
-		self.queryResult = queryResult
-		self.numResults = 0
-		if querySuccess() is True:
-			self.numResults = int(queryResult['totalRows'])
-		self.numRows = len(queryResult['rows'])
 
 	def querySuccess(self):
 		""" Check if query was successful. """
@@ -95,3 +87,11 @@ class QueryResult:
 		if self.querySuccess() is False:
 			return False
 		return self.queryResult['schema']['fields']
+
+	def __init__(self, queryResult):
+		""" Initialize new QueryResult using supplied results. """
+		self.queryResult = queryResult
+		self.numResults = 0
+		if querySuccess() is True:
+			self.numResults = int(queryResult['totalRows'])
+		self.numRows = len(queryResult['rows'])

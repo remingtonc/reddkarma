@@ -1,5 +1,5 @@
 from flask import Flask
-import bigquery
+from bigquery import BigQuery, QueryResult
 
 app = Flask(__name__)
 bq = BigQuery()
