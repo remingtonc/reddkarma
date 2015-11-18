@@ -11,7 +11,7 @@ bq = BigQuery()
 @app.route('/')
 def home():
 	preQuery = 'SELECT domain, COUNT(*) count, ROUND(AVG(score), 1) avg_score FROM'
-	postQuery = 'WHERE YEAR(SEC_TO_TIMESTAMP(created))=2015 AND NOT domain CONTAINS "self."" GROUP BY 1 HAVING count > 700 ORDER BY 3 DESC LIMIT 10'
+	postQuery = 'WHERE YEAR(SEC_TO_TIMESTAMP(created))=2015 AND NOT domain CONTAINS "self." GROUP BY 1 HAVING count > 700 ORDER BY 3 DESC LIMIT 10'
 	queryString = bq.buildQuery(preQuery, postQuery)
 	result = bq.query(queryString)
 	result = QueryResult(result)
