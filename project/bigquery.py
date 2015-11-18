@@ -92,6 +92,6 @@ class QueryResult:
 		""" Initialize new QueryResult using supplied results. """
 		self.queryResult = queryResult
 		self.numResults = 0
-		if querySuccess() is True:
+		if self.querySuccess() is True:
 			self.numResults = int(queryResult['totalRows'])
 		self.numRows = len(queryResult['rows'])
