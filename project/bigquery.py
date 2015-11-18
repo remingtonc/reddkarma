@@ -29,26 +29,26 @@ class BigQuery:
 
 	def getTableId(self):
 		""" Get the table ID to be used for querying. """
-		return table_id
+		return self.table_id
 
 	def buildQuery(self, prefix, suffix):
 		""" Build a query with the table ID.
 		:param prefix: Query fragment to append before table identification.  Trailing spaces not required.
 		"param suffix: Query fragment to append after table identification.  Padding spaces not required.
 		"""
-		return prefix + " " + table_id + " " + suffix;
+		return prefix + " " + self.table_id + " " + suffix;
 
 	def query(self, queryString):
 		""" Query the BigQuery database and return results synchronously
 		:param queryString: String to query BigQuery with.
 		"""
 		# Copy requestStructure so we don't run the risk of the structure changing
-		request = requestStructure.copy()
-		request['query'] = queryString
+		request = self.requestStructure.copy()
+		request['query'] = self.queryString
 		# Convert request dict into JSON
 		request = json.dumps(request)
 		# Make request, takes up to request.timeoutMs
-		response = service.jobs.query(project_id, request)
+		response = self.service.jobs.query(self.project_id, request)
 		# Convert returned JSON into dict for return
 		return json.loads(response)
 
