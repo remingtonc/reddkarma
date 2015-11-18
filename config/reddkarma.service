@@ -1,0 +1,12 @@
+[Unit]
+Description=ReddKarma Gunicorn Daemon
+After=network.target
+
+[Service]
+User=racampbe
+Group=nginx
+WorkingDirectory=/home/racampbe/reddkarma/project/
+ExecStart=/home/racampbe/reddkarma/.env/bin/gunicorn --workers 2 --bind unix:/home/racampbe/reddkarma/reddkarma.sock --error-logfile /home/racampbe/reddkarma/logs/gunicorn-error.log --log-file /home/racampbe/reddkarma/logs/gunicorn.log --chdir /var/www/reddkarma/project wsgi:app
+
+[Install]
+WantedBy=multi-user.target
