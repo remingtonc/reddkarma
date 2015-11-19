@@ -15,7 +15,7 @@ class BigQuery:
 
 	# Basic structure of a request to the BigQuery API.
 	requestStructure = {
-		'timeoutMs': 10 * 1000,
+		'timeoutMs': 60 * 1000,
 		'kind': 'bigquery#queryRequest',
 		'dryRun': False,
 		'useQueryCache': True,
@@ -92,7 +92,23 @@ class QueryResult:
 		"""
 		if self.querySuccess() is False:
 			return False
-		return self.queryResult.get('schema', {'fields': {}}})['fields']
+		return self.queryResult.get('schema', {'fields': {}})['fields']
+
+	def getHTMLTable():
+		if self.queryResult.querySuccess() is not True:
+			return 'Query did not succeed.'
+		output = '<table><tr>'
+		headers = self.queryResult.getSchema()
+		for header in headers:
+			output += '<th>' + header['name'] + '</th>'
+		output += '</tr>'
+		for row in self.queryResult.getResults():
+			output += '<tr>'
+			for column in row.get('f', {}):
+				output += '<td>' + column.get('v', 'Null') + '</td>'
+			output += '</tr>'
+		output += '</table>'
+		return output
 
 	def __init__(self, queryResult):
 		""" Initialize new QueryResult using supplied results. """

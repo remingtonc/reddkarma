@@ -21,6 +21,15 @@ def nullreddit():
 def subreddit(subreddit):
 	return render_template('subreddit.html', name='subreddit', subreddit=subreddit)
 
+@app.route('/potential')
+def potential():
+	preQuery = 'SELECT subreddit as Subreddit, MAX(median) as Potential FROM (SELECT subreddit, PERCENTILE_CONT(0.5) OVER (PARTITION BY subreddit ORDER BY score) as median FROM'
+	postQuery = 'GROUP BY Subreddit ORDER BY Potential DESC LIMIT 20'
+	queryString = bq.buildQuery(preQuery, postQuery)
+	result = bq.query(queryString)
+	result = QueryResult(result)
+	return result.getHTMLTable()
+
 @app.route('/queryTest')
 def queryTest():
 	preQuery = 'SELECT domain, COUNT(*) count, ROUND(AVG(score), 1) avg_score FROM'
@@ -28,17 +37,4 @@ def queryTest():
 	queryString = bq.buildQuery(preQuery, postQuery)
 	result = bq.query(queryString)
 	result = QueryResult(result)
-	if result.querySuccess() is not True:
-		return 'Query did not succeed.'
-	output = '<table><tr>'
-	headers = result.getSchema()
-	for header in headers:
-		output += '<th>' + header['name'] + '</th>'
-	output += '</tr>'
-	for row in result.getResults():
-		output += '<tr>'
-		for column in row.get('f', {}):
-			output += '<td>' + column.get('v', 'Null') + '</td>'
-		output += '</tr>'
-	output += '</table>'
-	return output
+	return result.getHTMLTable()
