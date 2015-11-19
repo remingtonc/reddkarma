@@ -1,16 +1,7 @@
-$(document).ready(init);
-
 function init() {
-	setupSearch();
     getKarma();
     getDomains();
     initializeHourlyChart();
-}
-
-function setupSearch() {
-	$("#searchSubmit").on('click', function() {
-		window.location = "http://192.241.216.69"+$("#search").val();
-	});
 }
 
 /**

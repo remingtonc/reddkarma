@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+
+{% block head_includes %}
+<script src="/static/js/home.js"></script>
+{% endblock %}
+
 {% block content %}
 <div class="panel panel-default">
 	<div class="panel-body">
@@ -6,19 +11,18 @@
 		<p>ReddKarma is your ultimate Reddit Karma optimization platform.  Utilizing data collected over the span of 2006 to 2015, ReddKarma has the ultimate Reddit submission insights to help you garner as much Karma as possible.  What do we provide?</p>
 		<ul>
 			<li>Subreddit Ranking</li>
-			<li>Subreddit Typing Analysis</li>
+			<li><s>Subreddit Typing Analysis</s></li>
 			<li>Hourly Karma breakdowns</li>
-			<li>Day of Week Karma breakdown</li>
-			<li>Relevancy Analysis</li>
-			<li>Trend Analysis</li>
+			<li><s>Day of Week Karma breakdown</s></li>
+			<li><s>Relevancy Analysis</s></li>
+			<li><s>Trend Analysis</s></li>
 			<li>Micro-feature analysis, such as repost popularity, etc.</li>
 		</ul>
 		<p>With your efforts, and our analysis, you have greater potential to maximize your Reddit Karma than ever before.</p>
 	</div>
 </div>
-<div class="alert alert-danger" role="alert"><h1>Karma Factories</h1></div>
-<table class="table table-hover">
-	<tr><th>Subreddit</th><th>Score Rank</th><th>Potential Rank</th><th>Relevancy Rank</th></tr>
-	<tr><td>Example</td><td>Example</td><td>Example</td><td>Example</td></tr>
+<div class="alert alert-info" role="alert"><h1>Karma Factories</h1></div>
+<table class="table table-hover" id="karmaFactories">
+	<tr><th>Subreddit</th><th>Total Karma</th><th>Average Karma</th></tr>
 </table>
 {% endblock %}

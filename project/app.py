@@ -48,19 +48,19 @@ def domains(subreddit):
 	result = QueryResult(result)
 	return result.getJSON()
 
+@app.route('/top')
+def top():
+	preQuery = 'SELECT subreddit as Subreddit, SUM(score) as Score, ROUND(AVG(score), 1) as Average FROM'
+	postQuery = 'GROUP BY Subreddit ORDER BY Score DESC LIMIT 10'
+	queryString = bq.buildQuery(preQuery, postQuery)
+	result = bq.query(queryString)
+	result = QueryResult(result)
+	return result.getJSON()
+
 @app.route('/potential')
 def potential():
 	preQuery = 'SELECT subreddit as Subreddit, MAX(median) as Potential FROM (SELECT subreddit, PERCENTILE_CONT(0.5) OVER (PARTITION BY subreddit ORDER BY score) as median FROM'
 	postQuery = ') GROUP BY Subreddit ORDER BY Potential DESC LIMIT 20'
-	queryString = bq.buildQuery(preQuery, postQuery)
-	result = bq.query(queryString)
-	result = QueryResult(result)
-	return result.getHTMLTable()
-
-@app.route('/queryTest')
-def queryTest():
-	preQuery = 'SELECT domain, COUNT(*) count, ROUND(AVG(score), 1) avg_score FROM'
-	postQuery = 'WHERE YEAR(SEC_TO_TIMESTAMP(created))=2015 AND NOT domain CONTAINS "self." GROUP BY 1 HAVING count > 700 ORDER BY 3 DESC LIMIT 10'
 	queryString = bq.buildQuery(preQuery, postQuery)
 	result = bq.query(queryString)
 	result = QueryResult(result)
