@@ -32,7 +32,7 @@ def karma(subreddit):
 
 @app.route('/hourly/<subreddit>')
 def hourly(subreddit):
-	preQuery = 'SELECT HOUR(SEC_TO_TIMESTAMP(created)) as HourTime, AVG(score) as Score FROM'
+	preQuery = 'SELECT HOUR(SEC_TO_TIMESTAMP(created)) as HourTime, ROUND(AVG(score), 1) as Score FROM'
 	postQuery = 'WHERE subreddit="' + subreddit + '" GROUP BY HourTime ORDER BY HourTime ASC'
 	queryString = bq.buildQuery(preQuery, postQuery)
 	result = bq.query(queryString)

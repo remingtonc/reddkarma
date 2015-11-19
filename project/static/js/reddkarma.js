@@ -11,11 +11,11 @@ function init() {
  */
 function getKarma() {
 	$.get("/karma/"+subreddit).done(function(data) {
-		console.log("totalkarma: " + data.totalKarma);
-		$("#totalKarma").html(data.totalKarma);
-		console.log("averagekarma: " + data.averageKarma);
-		$("#avgKarma").html(data.averageKarma);
-	})
+		console.log("totalkarma: " + data.f[0].v);
+		$("#totalKarma").html(data.f[0].v);
+		console.log("averagekarma: " + data.f[1].v);
+		$("#avgKarma").html(data.f[1].v);
+	});
 }
 
 /**
@@ -40,9 +40,9 @@ function initializeHourlyChart() {
 	var ctx = document.getElementById("hourlyChart").getContext("2d");
 	$.get("/hourly/"+subreddit).done(function(data) {
 		for (var i in data) {
-			console.log(i);
-			chartData.datasets[0].data.push(i);
+			console.log(i.f[1].v);
+			chartData.datasets[0].data.push(i.f[1].v);
 		}
-		var hourlyChart = new Chart(ctx).Bar(data, options);
+		var hourlyChart = new Chart(ctx).Bar(data, {});
 	});
 }
