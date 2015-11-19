@@ -95,7 +95,7 @@ class QueryResult:
 			return False
 		return self.queryResult.get('schema', {'fields': {}})['fields']
 
-	def getHTMLTable():
+	def getHTMLTable(self):
 		if self.queryResult.querySuccess() is not True:
 			return 'Query did not succeed.'
 		output = '<table><tr>'
@@ -111,7 +111,7 @@ class QueryResult:
 		output += '</table>'
 		return output
 
-	def getJSON():
+	def getJSON(self):
 		if self.queryResult.querySuccess() is not True:
 			return 'Query did not succeed.'
 		return json.dumps(self.queryResult.getResults())

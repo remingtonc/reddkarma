@@ -36,7 +36,7 @@ function initializeHourlyChart() {
 		]
 	};
 	for (var i = 0; i < 24; i++)
-		data.labels[i] = ((i==0 || i==12) ? 12 : (i % 12)) + " " + ((i > 11) ? "AM" : "PM");
+		chartData.labels[i] = ((i==0 || i==12) ? 12 : (i % 12)) + " " + ((i > 11) ? "AM" : "PM");
 	var ctx = document.getElementById("hourlyChart").getContext("2d");
 	$.get("/hourly/"+subreddit).done(function(data) {
 		for (var i in data) {
