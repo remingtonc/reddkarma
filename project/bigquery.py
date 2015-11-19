@@ -1,6 +1,7 @@
 from apiclient.discovery import build
 from apiclient.errors import HttpError
 from oauth2client.client import GoogleCredentials
+import secrets
 import logging
 
 class BigQuery:
@@ -8,9 +9,9 @@ class BigQuery:
 	Handles BigQuery access and retrieval.
 	"""
 
-	api_key = 'AIzaSyAJn5yLJlQUx7kB2N3xEXIK_D7yEq05JJw'
-	project_id = 'loyal-landing-110819'
-	table_id = '[loyal-landing-110819:reddit_posts.full_corpus_201509]'
+	api_key = secrets.api_key
+	project_id = secrets.project_id
+	table_id = secrets.table_id
 
 	# Basic structure of a request to the BigQuery API.
 	requestStructure = {
@@ -28,7 +29,7 @@ class BigQuery:
 
 	# Grab the application's default credentials from the environment.
 	credentials = GoogleCredentials.get_application_default()
-	# Build service for common usage.
+	# Build service for common usage across instances.
 	service = build('bigquery', 'v2', credentials=credentials)
 
 	def getTableId(self):
@@ -62,7 +63,7 @@ class BigQuery:
 
 class QueryResult:
 	""" Container for common methods related to BigQuery results.
-	Handles determining query successes, getting the schema, and getting results from returned set."
+	Handles determining query successes, getting the schema, and getting results from returned set.
 	"""
 
 	def querySuccess(self):
@@ -91,7 +92,7 @@ class QueryResult:
 		"""
 		if self.querySuccess() is False:
 			return False
-		return self.queryResult.get('schema', {'fields': None})['fields']
+		return self.queryResult.get('schema', {'fields': {}}})['fields']
 
 	def __init__(self, queryResult):
 		""" Initialize new QueryResult using supplied results. """

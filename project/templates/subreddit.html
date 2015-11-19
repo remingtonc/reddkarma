@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}
+/r/{{ subreddit }}
+{% endblock %}
+
+{% block head_includes %}
+<script>var subreddit = '{{ subreddit }}';</script>
+{% endblock %}
+
+{% block content %}
+<h1>{{ subreddit }}</h1>
+{% endblock %}

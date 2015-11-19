@@ -1,9 +1,10 @@
 from flask import Flask, render_template, url_for
 from bigquery import BigQuery, QueryResult
+from werkzeug.routing import BaseConverter
 import logging
 
 logging.basicConfig(filename='reddkarma.log', level=logging.DEBUG, format='%(asctime)s %(message)s')
-logging.debug('Debug message check.')
+logging.debug('Application initialized')
 
 app = Flask(__name__)
 bq = BigQuery()
@@ -11,6 +12,14 @@ bq = BigQuery()
 @app.route('/')
 def home():
 	return render_template('home.html', name='home')
+
+@app.route('/r/')
+def nullreddit():
+	return 'No subreddit supplied.';
+
+@app.route('/r/<subreddit>')
+def subreddit(subreddit):
+	return render_template('subreddit.html', name='subreddit', subreddit=subreddit)
 
 @app.route('/queryTest')
 def queryTest():
