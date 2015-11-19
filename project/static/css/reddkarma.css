@@ -11,18 +11,6 @@ div.logo {
 	height: 69.6px;
 }
 
-canvas#hourlyChart {
-	margin: 0 auto;
-}
-
-div.panel-title {
-	text-align: center;
-}
-
-div.analysis > div.panel-body > div.well {
-	text-align: center;
-}
-
 div.top-navigation > div.row > div {
 	margin-top: 23px;
 	text-align: right;
@@ -36,6 +24,10 @@ div.top-navigation > div.row > div > h3 {
 	margin-top: 5px;
 }
 
-table#karmaFactories {
+table#karmaFactories th {
+	text-align: center;
+}
+
+.center {
 	text-align: center;
 }
