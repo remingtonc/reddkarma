@@ -12,3 +12,7 @@ canvas#hourlyChart {
 div.panel-title {
 	text-align: center;
 }
+
+div.analysis > div.panel-body > div.well {
+	text-align: center;
+}

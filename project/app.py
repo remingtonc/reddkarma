@@ -39,6 +39,15 @@ def hourly(subreddit):
 	result = QueryResult(result)
 	return result.getJSON()
 
+@app.route('/domains/<subreddit>')
+def domains(subreddit):
+	preQuery = 'SELECT domain, SUM(score) as Karma, ROUND(AVG(score), 1) as AverageKarma FROM'
+	postQuery = 'WHERE subreddit="' + subreddit + '" GROUP BY domain ORDER BY Karma DESC LIMIT 5'
+	queryString = bq.buildQuery(preQuery, postQuery)
+	result = bq.query(queryString)
+	result = QueryResult(result)
+	return result.getJSON()
+
 @app.route('/potential')
 def potential():
 	preQuery = 'SELECT subreddit as Subreddit, MAX(median) as Potential FROM (SELECT subreddit, PERCENTILE_CONT(0.5) OVER (PARTITION BY subreddit ORDER BY score) as median FROM'
