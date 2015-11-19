@@ -35,3 +35,7 @@ div.top-navigation > div.row > div > button {
 div.top-navigation > div.row > div > h3 {
 	margin-top: 5px;
 }
+
+table#karmaFactories {
+	text-align: center;
+}
