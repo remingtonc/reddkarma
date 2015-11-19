@@ -25,12 +25,14 @@ function initializeHourlyChart() {
 	var chartData = {
 		labels: [],
 		datasets: [
-			label: "Karma By Hour",
-			fillColor: "rgba(220,220,220,0.5)",
-            strokeColor: "rgba(220,220,220,0.8)",
-            highlightFill: "rgba(220,220,220,0.75)",
-            highlightStroke: "rgba(220,220,220,1)",
-            data: []
+			{
+				label: "Karma By Hour",
+				fillColor: "rgba(220,220,220,0.5)",
+	            strokeColor: "rgba(220,220,220,0.8)",
+	            highlightFill: "rgba(220,220,220,0.75)",
+	            highlightStroke: "rgba(220,220,220,1)",
+	            data: []
+	        }
 		]
 	};
 	for (var i = 0; i < 24; i++)
@@ -39,7 +41,7 @@ function initializeHourlyChart() {
 	$.get("/hourly/"+subreddit).done(function(data) {
 		for (var i in data) {
 			console.log(i);
-			chartData.push(i);
+			chartData.datasets[0].data.push(i);
 		}
 		var hourlyChart = new Chart(ctx).Bar(data, options);
 	});
