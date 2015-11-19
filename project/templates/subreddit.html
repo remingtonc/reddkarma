@@ -13,35 +13,37 @@
 {% block content %}
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<div class="panel-title"><h1>ReddKarma <a href="http://www.reddit.com/r/{{subreddit}}">/r/{{ subreddit }}</a> Analysis</h1>
+		<div class="panel-title"><h2>ReddKarma <a href="http://www.reddit.com/r/{{subreddit}}">/r/{{ subreddit }}</a> Analysis</h2>
 		</div>
 	</div>
-	<div class="panel-body">
-		<div class="row">
-			<div class="col-md-4">
-				<h2>Total Karma</h2>
-			</div>
-			<div class="col-md-8" id="totalKarma">
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-4">
-				<h2>Average Karma</h2>
-			</div>
-			<div class="col-md-8" id="avgKarma">
-			</div>
-		</div>
-		<div class="row">
-			<canvas id="hourlyChart" width="600" height="600">
-			</canvas>
-		</div>
-		<div class="row">
-			<div class="col-md-4">
-				<h2>Subreddit Type</h2>
-			</div>
-			<div class="col-md-8" id="subType">
-			</div>
-		</div>
-	</div>
+	<table class="table">
+		<tr>
+			<th>Total Karma</th>
+			<td id="totalKarma"></td>
+		</tr>
+		<tr>
+			<th>Average Karma</th>
+			<td id="avgKarma"></td>
+		</tr>
+		<tr>
+			<h3>Average Total Karma per Post Creation Hour</h3>
+			<canvas id="hourlyChart" width="1000" height="400"></canvas>
+		</tr>
+		<tr>
+			<th>Subreddit Type</th>
+			<td id="subType"></td>
+		</tr>
+		<tr>
+			<th>Top Submission Domains</th>
+			<td>
+				<table class="table" id="submissionDomains">
+					<tr>
+						<th>Domain</th>
+						<th>Average Karma</th>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
 </div>
 {% endblock %}
