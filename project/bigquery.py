@@ -96,14 +96,14 @@ class QueryResult:
 		return self.queryResult.get('schema', {'fields': {}})['fields']
 
 	def getHTMLTable(self):
-		if self.queryResult.querySuccess() is not True:
+		if self.querySuccess() is not True:
 			return 'Query did not succeed.'
 		output = '<table><tr>'
-		headers = self.queryResult.getSchema()
+		headers = self.getSchema()
 		for header in headers:
 			output += '<th>' + header['name'] + '</th>'
 		output += '</tr>'
-		for row in self.queryResult.getResults():
+		for row in self.getResults():
 			output += '<tr>'
 			for column in row.get('f', {}):
 				output += '<td>' + column.get('v', 'Null') + '</td>'
@@ -112,9 +112,9 @@ class QueryResult:
 		return output
 
 	def getJSON(self):
-		if self.queryResult.querySuccess() is not True:
+		if self.querySuccess() is not True:
 			return 'Query did not succeed.'
-		return json.dumps(self.queryResult.getResults())
+		return json.dumps(self.getResults())
 
 	def __init__(self, queryResult):
 		""" Initialize new QueryResult using supplied results. """
