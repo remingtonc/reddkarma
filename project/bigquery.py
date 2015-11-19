@@ -1,6 +1,7 @@
 from apiclient.discovery import build
 from apiclient.errors import HttpError
 from oauth2client.client import GoogleCredentials
+import json
 import secrets
 import logging
 
@@ -109,6 +110,11 @@ class QueryResult:
 			output += '</tr>'
 		output += '</table>'
 		return output
+
+	def getJSON():
+		if self.queryResult.querySuccess() is not True:
+			return 'Query did not succeed.'
+		return json.dumps(self.queryResult.getResults())
 
 	def __init__(self, queryResult):
 		""" Initialize new QueryResult using supplied results. """
